@@ -8,6 +8,9 @@ type Game struct {
 	horizontalIncoming int
 }
 
+type ImpossibleMoveError struct{ error }
+type UnknownMoveError struct{ error }
+
 func NewGame() *Game {
 	game := new(Game)
 	game.data[FirstBlockX][FirstBlockY] = FirstBlockData
@@ -31,40 +34,101 @@ func (self *Game) getHorizontalIncoming() int {
 	return self.horizontalIncoming
 }
 
+func (self *Game) moveRight() (moved bool) {
+	for i, row := range self.data {
+		newRow := moveRowDown(row[:])
+		if newRow != nil {
+			moved = true
+			for j := 0; j < GameFieldSize; j++ {
+				self.data[i][j] = newRow[j]
+			}
+		}
+	}
+
+	return
+}
+
+func (self *Game) moveLeft() (moved bool) {
+	for i, row := range self.data {
+		reverseRow := revertSlice(row[:])
+		newReversedRow := moveRowDown(reverseRow)
+
+		if newReversedRow != nil {
+			newRow := revertSlice(newReversedRow)
+
+			moved = true
+
+			for j := 0; j < GameFieldSize; j++ {
+				self.data[i][j] = newRow[j]
+			}
+		}
+	}
+
+	return
+}
+func (self *Game) moveDown() (moved bool) {
+	for i, _ := range self.data {
+		thisColumn := make([]int, 4)
+		for j := 0; j < GameFieldSize; j++ {
+			thisColumn[j] = self.data[j][i]
+		}
+
+		newColumn := moveRowDown(thisColumn)
+
+		if newColumn != nil {
+			moved = true
+
+			for j := 0; j < GameFieldSize; j++ {
+				self.data[j][i] = newColumn[j]
+			}
+		}
+	}
+
+	return
+}
+
+func (self *Game) moveUp() (moved bool) {
+	for i, _ := range self.data {
+		thisColumn := make([]int, 4)
+		for j := 0; j < GameFieldSize; j++ {
+			thisColumn[j] = self.data[j][i]
+		}
+
+		newColumn := moveRowDown(revertSlice(thisColumn))
+
+		if newColumn != nil {
+			newColumn = revertSlice(newColumn)
+			moved = true
+
+			for j := 0; j < GameFieldSize; j++ {
+				self.data[j][i] = newColumn[j]
+			}
+		}
+	}
+	return
+}
+
 func (self *Game) Move(where int) error {
 	var moved bool = false
 
 	switch where {
 	case RIGHT:
-		for i, row := range self.data {
-			newRow := moveRowDown(row[:])
-			if newRow != nil {
-				moved = true
-				for j := 0; j < GameFieldSize; j++ {
-					self.data[i][j] = newRow[j]
-				}
-			}
-		}
+		moved = self.moveRight()
 	case LEFT:
-		for i, row := range self.data {
-			reverseRow := revertSlice(row[:])
-			newReversedRow := moveRowDown(reverseRow)
-
-			if newReversedRow != nil {
-				newRow := revertSlice(newReversedRow)
-
-				moved = true
-
-				for j := 0; j < GameFieldSize; j++ {
-					self.data[i][j] = newRow[j]
-				}
-			}
-		}
+		moved = self.moveLeft()
+	case DOWN:
+		moved = self.moveDown()
+	case UP:
+		moved = self.moveUp()
+	default:
+		return &UnknownMoveError{}
 	}
 
-	_ = moved
-
-	return nil
+	if moved == false {
+		return &ImpossibleMoveError{}
+	} else {
+		return nil
+	}
 }
 
 func canMerge(first, second int) bool {

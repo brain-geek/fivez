@@ -3,6 +3,8 @@ package base
 import "testing"
 import "reflect"
 
+// import "fmt"
+
 func TestNewGamePositions(t *testing.T) {
 	t.Log("Creating new Game")
 	game := NewGame()
@@ -144,6 +146,30 @@ func TestBigMergeMoveRowDown(t *testing.T) {
 	}
 }
 
+func TestFailMove(t *testing.T) {
+	game := NewGame()
+
+	game.data[1][3] = 2
+
+	e := game.Move(RIGHT)
+
+	if (e == nil) || (reflect.TypeOf(e).String() != "*base.ImpossibleMoveError") {
+		t.Errorf("Expected move create ImpossibleMoveError, got %v instead", e)
+	}
+}
+
+func TestUnknownMove(t *testing.T) {
+	game := NewGame()
+
+	game.data[1][3] = 2
+
+	e := game.Move(-123)
+
+	if (e == nil) || (reflect.TypeOf(e).String() != "*base.UnknownMoveError") {
+		t.Errorf("Expected move create UnknownMoveError, got %v instead", e)
+	}
+}
+
 func TestSimpleMoveRight(t *testing.T) {
 	game := NewGame()
 
@@ -188,6 +214,54 @@ func TestSimpleMoveLeft(t *testing.T) {
 
 	if !value {
 		t.Errorf("Expected existing point to move one row left from %v, but got %v instead.", NewGame().Positions(), game.Positions())
+	}
+
+}
+
+func TestSimpleMoveDown(t *testing.T) {
+	game := NewGame()
+
+	e := game.Move(DOWN)
+
+	if e != nil {
+		t.Errorf("Expected move to be OK, got %v instead", e)
+	}
+
+	shouldBeArray := [4][4]int{
+		[4]int{0, 0, 0, 0},
+		[4]int{0, 0, 0, 0},
+		[4]int{0, 0, 2, 0},
+		[4]int{0, 0, 0, 0},
+	}
+
+	value := game.Positions() == shouldBeArray
+
+	if !value {
+		t.Errorf("Expected existing point to move one row down from %v, but got %v instead.", NewGame().Positions(), game.Positions())
+	}
+
+}
+
+func TestSimpleMoveUp(t *testing.T) {
+	game := NewGame()
+
+	e := game.Move(UP)
+
+	if e != nil {
+		t.Errorf("Expected move to be OK, got %v instead", e)
+	}
+
+	shouldBeArray := [4][4]int{
+		[4]int{0, 0, 2, 0},
+		[4]int{0, 0, 0, 0},
+		[4]int{0, 0, 0, 0},
+		[4]int{0, 0, 0, 0},
+	}
+
+	value := game.Positions() == shouldBeArray
+
+	if !value {
+		t.Errorf("Expected existing point to move one row top from %v, but got %v instead.", NewGame().Positions(), game.Positions())
 	}
 
 }

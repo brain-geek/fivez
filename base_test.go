@@ -265,3 +265,37 @@ func TestSimpleMoveUp(t *testing.T) {
 	}
 
 }
+
+func TestLoss(t *testing.T) {
+	game := NewGame()
+
+	result, err := game.HaveLost()
+	if result {
+		t.Errorf("Expected start position to be non-lossy, but it is.")
+	}
+
+	if err != nil {
+		t.Errorf("Expected to have no errors, but got %v.", err)
+	}
+
+	if game.Positions() != NewGame().Positions() {
+		t.Errorf("Expected checking for loss to not change positions, but got %v.", game.Positions())
+	}
+
+	game.data = [4][4]int{
+		[4]int{1, 5, 2, 5},
+		[4]int{100, 10, 100, 10},
+		[4]int{200, 20, 200, 20},
+		[4]int{1, 30, 2, 30},
+	}
+
+	result, err = game.HaveLost()
+
+	if !result {
+		t.Errorf("Expected lossy position to be lossy, but it is not.")
+	}
+
+	if err != nil {
+		t.Errorf("Expected to have no errors, but got %v.", err)
+	}
+}

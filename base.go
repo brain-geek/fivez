@@ -131,6 +131,25 @@ func (self *Game) Move(where int) error {
 	}
 }
 
+func (self Game) HaveLost() (bool, error) {
+	for _, move := range &[4]int{RIGHT, LEFT, DOWN, UP} {
+		moveResult := self.Move(move)
+
+		if moveResult == nil { // move OK
+			return false, nil
+		}
+
+		switch moveResult.(type) {
+		case *ImpossibleMoveError:
+			continue
+		default:
+			return false, moveResult
+		}
+	}
+
+	return true, nil
+}
+
 func canMerge(first, second int) bool {
 	if (first == 0) || (second == 0) {
 		return false

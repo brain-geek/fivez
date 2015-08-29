@@ -1,4 +1,4 @@
-package fivez_core
+package core
 
 func moveRowDown(row []int) (result []int) {
 	var moved bool = false

@@ -1,4 +1,4 @@
-package fivez_core
+package core
 
 import "testing"
 import "reflect"

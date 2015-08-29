@@ -3,8 +3,6 @@ package core
 import "testing"
 import "reflect"
 
-// import "fmt"
-
 func TestFailMove(t *testing.T) {
 	game := NewGame()
 
@@ -12,7 +10,7 @@ func TestFailMove(t *testing.T) {
 
 	e := game.Move(RIGHT)
 
-	if (e == nil) || (reflect.TypeOf(e).String() != "*base.ImpossibleMoveError") {
+	if (e == nil) || (reflect.TypeOf(e).String() != "*core.ImpossibleMoveError") {
 		t.Errorf("Expected move create ImpossibleMoveError, got %v instead", e)
 	}
 }
@@ -24,7 +22,7 @@ func TestUnknownMove(t *testing.T) {
 
 	e := game.Move(-123)
 
-	if (e == nil) || (reflect.TypeOf(e).String() != "*base.UnknownMoveError") {
+	if (e == nil) || (reflect.TypeOf(e).String() != "*core.UnknownMoveError") {
 		t.Errorf("Expected move create UnknownMoveError, got %v instead", e)
 	}
 }

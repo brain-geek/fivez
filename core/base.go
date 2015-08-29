@@ -124,10 +124,10 @@ func (self *Game) Move(where int) error {
 		return &UnknownMoveError{}
 	}
 
-	if moved == false {
-		return &ImpossibleMoveError{}
-	} else {
+	if moved {
 		return nil
+	} else {
+		return &ImpossibleMoveError{}
 	}
 }
 

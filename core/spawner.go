@@ -9,11 +9,16 @@ func (game *Game) SpawnVertical() bool {
 	columnToUseWhenSpawning := game.moveNumber % GameFieldSize
 
 	for i := 0; i < GameFieldSize; i++ {
-		if game.data[i][columnToUseWhenSpawning] == 0 {
-			game.data[i][columnToUseWhenSpawning] = numberToSpawn
-			game.spawnCounter += 1
-			return true
+		for j := 0; j < GameFieldSize; j++ {
+			currentColumn := (columnToUseWhenSpawning + j) % GameFieldSize
+
+			if game.data[i][currentColumn] == 0 {
+				game.data[i][currentColumn] = numberToSpawn
+				game.spawnCounter += 1
+				return true
+			}
 		}
+
 	}
 
 	return false

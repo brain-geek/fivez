@@ -98,3 +98,59 @@ func TestSimpleSpawningInOrder(t *testing.T) {
 		t.Errorf("Wrong spawn - received %v instead of %v.", game.Positions(), shouldBeAfterSpawn)
 	}
 }
+
+func TestHardSpawningCase(t *testing.T) {
+	var shouldBeAfterSpawn [4][4]int
+	game := NewGame()
+
+	// First two columns are occupied - so it should be placed in first OK place
+	game.data = [4][4]int{
+		[4]int{3, 3, 5, 3},
+		[4]int{3, 3, 2, 5},
+		[4]int{1, 3, 0, 0},
+		[4]int{3, 3, 0, 0},
+	}
+
+	shouldBeAfterSpawn = [4][4]int{
+		[4]int{3, 3, 5, 3},
+		[4]int{3, 3, 2, 5},
+		[4]int{1, 3, game.NextSpawn(), 0},
+		[4]int{3, 3, 0, 0},
+	}
+
+	game.SpawnVertical()
+
+	if game.Positions() != shouldBeAfterSpawn {
+		t.Errorf("Wrong spawn - received %v instead of %v.", game.Positions(), shouldBeAfterSpawn)
+	}
+}
+
+func TestOverflowSpawningCase(t *testing.T) {
+	var shouldBeAfterSpawn [4][4]int
+	game := NewGame()
+
+	game.SpawnVertical()
+	game.SpawnVertical()
+
+	// Next spawn should go to third row, but will go to
+	// second, as it will be only one with free space
+	game.data = [4][4]int{
+		[4]int{3, 3, 5, 3},
+		[4]int{3, 0, 2, 0},
+		[4]int{1, 3, 2, 1},
+		[4]int{3, 3, 2, 1},
+	}
+
+	shouldBeAfterSpawn = [4][4]int{
+		[4]int{3, 3, 5, 3},
+		[4]int{3, game.NextSpawn(), 2, 0},
+		[4]int{1, 3, 2, 1},
+		[4]int{3, 3, 2, 1},
+	}
+
+	game.SpawnVertical()
+
+	if game.Positions() != shouldBeAfterSpawn {
+		t.Errorf("Wrong spawn - received %v instead of %v.", game.Positions(), shouldBeAfterSpawn)
+	}
+}

@@ -12,6 +12,17 @@ func StartGameUI() {
 
 mainloop:
 	for {
+
+		loss, _ := game.HaveLost()
+
+		if loss {
+			fmt.Println("Thank you for playing!")
+			fmt.Printf("Your score is %d.", game.GetScore())
+			fmt.Println("")
+
+			break mainloop
+		}
+
 		charCode, controlCode, _ := getChar()
 
 		switch controlCode {

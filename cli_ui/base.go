@@ -12,13 +12,15 @@ func StartGameUI() {
 
 mainloop:
 	for {
-		_, char, _ := getChar()
+		charCode, controlCode, _ := getChar()
 
-		fmt.Println(char)
+		fmt.Println(charCode, controlCode)
 
-		switch char {
+		switch controlCode {
 		case 0: //KeyEsc:
-			break mainloop
+			if (charCode == 27 /* ESC */) || (charCode == 113 /* q */) || (charCode == 3 /* ctrl-c */) {
+				break mainloop
+			}
 		case 37: //KeyArrowLeft:
 			game.Move(core.LEFT)
 		case 39: //KeyArrowRight:

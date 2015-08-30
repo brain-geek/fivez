@@ -6,6 +6,8 @@ type Game struct {
 	data               [GameFieldSize][GameFieldSize]int
 	verticalIncoming   int
 	horizontalIncoming int
+	moveNumber         int
+	spawnCounter       int
 }
 
 type ImpossibleMoveError struct{ error }
@@ -18,19 +20,23 @@ func NewGame() *Game {
 	return game
 }
 
-func (self *Game) Positions() [GameFieldSize][GameFieldSize]int {
+func (self Game) Positions() [GameFieldSize][GameFieldSize]int {
 	return self.data
 }
 
-func (self *Game) possibleDroppedFigures() []int {
+func (self Game) GetMoveNumber() int {
+	return self.moveNumber
+}
+
+func (self Game) possibleDroppedFigures() []int {
 	return []int{2, 3, 5}
 }
 
-func (self *Game) getVerticalIncoming() int {
+func (self Game) getVerticalIncoming() int {
 	return self.verticalIncoming
 }
 
-func (self *Game) getHorizontalIncoming() int {
+func (self Game) getHorizontalIncoming() int {
 	return self.horizontalIncoming
 }
 
@@ -125,6 +131,7 @@ func (self *Game) Move(where int) error {
 	}
 
 	if moved {
+		self.moveNumber += 1
 		return nil
 	} else {
 		return &ImpossibleMoveError{}
@@ -148,20 +155,6 @@ func (self Game) HaveLost() (bool, error) {
 	}
 
 	return true, nil
-}
-
-func (self Game) GetScore() (points int) {
-	for _, row := range self.data {
-		for _, item := range row {
-			if item < 5 {
-				continue
-			}
-
-			points += item
-		}
-	}
-
-	return
 }
 
 func canMerge(first, second int) bool {

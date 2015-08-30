@@ -122,3 +122,23 @@ func TestSimpleMoveUp(t *testing.T) {
 	}
 
 }
+
+func TestMoveNumbering(t *testing.T) {
+	game := NewGame()
+
+	if game.GetMoveNumber() != 0 {
+		t.Errorf("Wrong move number, got %v, expected %v.", game.GetMoveNumber(), 0)
+	}
+
+	_ = game.Move(DOWN)
+
+	if game.GetMoveNumber() != 1 {
+		t.Errorf("Wrong move number, got %v, expected %v.", game.GetMoveNumber(), 1)
+	}
+
+	_ = game.Move(DOWN)
+
+	if game.GetMoveNumber() != 2 {
+		t.Errorf("Wrong move number, got %v, expected %v.", game.GetMoveNumber(), 2)
+	}
+}

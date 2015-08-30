@@ -32,17 +32,21 @@ mainloop:
 				break mainloop
 			}
 		case 37: //KeyArrowLeft:
-			game.Move(core.LEFT)
-			game.SpawnVertical()
+			if game.Move(core.LEFT) == nil { // no errors means move was OK
+				game.SpawnVertical()
+			}
 		case 39: //KeyArrowRight:
-			game.Move(core.RIGHT)
-			game.SpawnVertical()
+			if game.Move(core.RIGHT) == nil { // no errors means move was OK
+				game.SpawnVertical()
+			}
 		case 38: //KeyArrowUp:
-			game.Move(core.UP)
-			game.SpawnVertical()
+			if game.Move(core.UP) == nil { // no errors means move was OK
+				game.SpawnVertical()
+			}
 		case 40: //KeyArrowDown:
-			game.Move(core.DOWN)
-			game.SpawnVertical()
+			if game.Move(core.DOWN) == nil { // no errors means move was OK
+				game.SpawnVertical()
+			}
 		default:
 		}
 		draw(game)

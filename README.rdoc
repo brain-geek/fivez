@@ -1,19 +1,10 @@
-= Game mechanics:
-- You have grid 4x4 with(or without) numbers
-- For both X and Y grid you have next 'incoming' position
-- Game starts with one '2' in the [1,1] position
+= How to play (plain CLI version):
 
-=== Moves
+If you already have GOPATH set up, you can just run:
 
-- On each move you have an opportunity to move stuff in grid (up/down, left/right)
-- If move doesn't change anything - it's not allowed
-- If you have free place in 'incoming' position in the direction opposite to move - you have new random number(2/3/5) added there.
-- Identical numbers (or 2+3) get added and stacked.
+    go get github.com/brain-geek/fivez/fivez-cli
+    fivez-cli
 
-=== Loss
+And play it.
 
-- If you can't move in any direction - you lose.
-
-=== Poins
-
-You can get score summing all numbers higher then 5 in the grid.
+To exit the game, you can press q or ESC. To move you can use arrows.

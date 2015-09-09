@@ -1,7 +1,7 @@
 package cli_ui
 
 import (
-	"experiments/fivez/core"
+	"github.com/brain-geek/fivez/core"
 	"io/ioutil"
 	"os"
 	"testing"

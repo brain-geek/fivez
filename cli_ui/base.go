@@ -1,7 +1,7 @@
 package cli_ui
 
 import "fmt"
-import "experiments/fivez/core"
+import "github.com/brain-geek/fivez/core"
 
 func StartGameUI() {
 	fmt.Println("Game goes here")

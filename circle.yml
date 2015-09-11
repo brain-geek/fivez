@@ -1,0 +1,9 @@
+dependencies:
+  post:
+    - go get github.com/brain-geek/fivez
+
+test:
+  pre:
+    - go version
+  override:
+    - go test -v github.com/brain-geek/fivez/cli_ui && go test -v github.com/brain-geek/fivez/core

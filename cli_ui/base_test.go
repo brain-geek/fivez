@@ -25,7 +25,8 @@ func TestDraw(t *testing.T) {
 |===========================|
 | Next number: |      2     |
 | Score: |             0    |
-\===========================/`
+\===========================/
+`
 
 	if output != shouldBeString {
 		t.Errorf("Expected things to be drawn as %v, but got %v.", output, shouldBeString)

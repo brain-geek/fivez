@@ -49,17 +49,19 @@ mainloop:
 			}
 		default:
 		}
+
+		// Clearing screen
+		fmt.Print("\033[H\033[2J")
 		draw(game)
 	}
 }
 
 func draw(game *core.Game) {
-	fmt.Print("\033[H\033[2J")
-
 	fmt.Println("/===========================\\")
 
 	for i, row := range game.Positions() {
-		fmt.Printf("| %4d | %4d | %4d | %4d | \n\r", row[0], row[1], row[2], row[3])
+		fmt.Printf("| %4d | %4d | %4d | %4d |", row[0], row[1], row[2], row[3])
+		fmt.Println("")
 
 		if i != (core.GameFieldSize - 1) {
 			fmt.Println("|===========================|")
@@ -70,7 +72,8 @@ func draw(game *core.Game) {
 
 	fmt.Println("| Next number: |     ", game.NextSpawn(), "    |")
 
-	fmt.Printf("| Score: |     %9d    |\n\r", game.GetScore())
+	fmt.Printf("| Score: |     %9d    |", game.GetScore())
+	fmt.Println("")
 
 	fmt.Println("\\===========================/")
 }

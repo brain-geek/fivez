@@ -1,4 +1,4 @@
-= How to play (plain CLI version):
+= How to play plain CLI version:
 
 If you already have GOPATH set up, you can just run:
 
@@ -8,3 +8,18 @@ If you already have GOPATH set up, you can just run:
 And play it.
 
 To exit the game, you can press q or ESC. To move you can use arrows.
+
+= How to play telnet version:
+
+If you already have GOPATH set up, you can just run:
+
+    go get github.com/brain-geek/fivez/fivez-telnet
+    fivez-telnet
+
+And in other console:
+
+    telnet localhost 3333
+
+And play it.
+
+To exit the game, you can send 'quit' command.

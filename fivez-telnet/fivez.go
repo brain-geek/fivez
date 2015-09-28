@@ -38,6 +38,9 @@ func handleRequest(conn net.Conn) {
 	defer conn.Close()
 
 	game := core.NewGame()
+	conn.Write([]byte("To play - use commands 'up', 'down', 'left', 'right' to move.\r\n"))
+	conn.Write([]byte("To quit - type 'quit' and press Enter.\r\n"))
+	conn.Write(DrawField(game))
 
 	for {
 		buf := make([]byte, 1024)
@@ -56,18 +59,30 @@ func handleRequest(conn net.Conn) {
 		case "up":
 			if game.Move(core.UP) == nil {
 				game.SpawnVertical()
+			} else {
+				conn.Write([]byte("Move failed.\r\n"))
+				conn.Write(DrawField(game))
 			}
 		case "down":
 			if game.Move(core.DOWN) == nil {
 				game.SpawnVertical()
+			} else {
+				conn.Write([]byte("Move failed.\r\n"))
+				conn.Write(DrawField(game))
 			}
 		case "left":
 			if game.Move(core.LEFT) == nil {
 				game.SpawnVertical()
+			} else {
+				conn.Write([]byte("Move failed.\r\n"))
+				conn.Write(DrawField(game))
 			}
 		case "right":
 			if game.Move(core.RIGHT) == nil {
 				game.SpawnVertical()
+			} else {
+				conn.Write([]byte("Move failed.\r\n"))
+				conn.Write(DrawField(game))
 			}
 		case "quit":
 			conn.Write([]byte(fmt.Sprintf("Your score is %d, re-connect to play again!\n", game.GetScore())))
@@ -75,8 +90,6 @@ func handleRequest(conn net.Conn) {
 			return
 		default:
 			conn.Write([]byte("Unknown command. Please use 'up', 'down', 'left' or 'right' to make move or 'quit' to stop game.\n\r"))
-			// conn.Write([]byte(command))
-			// conn.Write([]byte(fmt.Sprintf("%d", len(command))))
 		}
 
 		conn.Write(DrawField(game))

@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/brain-geek/fivez/core"
+	"io"
 	"net"
 	"os"
 	"strings"
@@ -46,6 +47,11 @@ func handleRequest(conn net.Conn) {
 		buf := make([]byte, 1024)
 
 		_, err := conn.Read(buf)
+
+		if err == io.EOF {
+			return
+		}
+
 		if err != nil {
 			fmt.Println("Error reading:", err.Error())
 		}

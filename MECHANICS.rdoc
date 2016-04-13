@@ -1,19 +1,19 @@
 = Game mechanics:
-- You have grid 4x4 with(or without) numbers
-- For both X and Y grid you have next 'incoming' position
-- Game starts with one '2' in the [1,1] position
+- You have a grid 4x4 with (or without) numbers.
+- For both X and Y axises you have next 'incoming' position.
+- The game starts with one '2' in the [1, 1] position.
 
 === Moves
 
-- On each move you have an opportunity to move stuff in grid (up/down, left/right)
-- If move doesn't change anything - it's not allowed
-- If you have free place in 'incoming' position in the direction opposite to move - you have new random number(2/3/5) added there.
-- Identical numbers (or 2+3) get added and stacked.
+- On each move you have an opportunity to move stuff in the grid (up/down, left/right).
+- If the move doesn't change anything &mdash; it's not allowed.
+- If you have a free place in 'incoming' position in the direction opposite to move &mdash; you get a new random number (2/3/5) added there.
+- Identical numbers (or 2 + 3) get added and stacked.
 
 === Loss
 
-- If you can't move in any direction - you lose.
+- If you can't move in any direction &mdash; you lose.
 
-=== Poins
+=== Points
 
-You can get score summing all numbers higher then 5 in the grid.
+- You can get the score by summing all numbers higher than 5 in the grid.
